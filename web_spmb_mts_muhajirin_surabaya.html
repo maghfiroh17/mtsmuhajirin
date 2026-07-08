@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Informasi Berkas & Daftar Ulang - MTs. Muhajirin Surabaya</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f5f1;
+        }
+        .heading-font {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* Custom scrollbar for select list & search options */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a7f3d0;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #059669;
+        }
+        /* Pulse Animation for CTA elements */
+        @keyframes custom-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        .pulse-attention {
+            animation: custom-pulse 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased">
+
+    <!-- Header/Hero Section with Islamic & Modern Theme -->
+    <header class="bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-900 text-white shadow-lg relative overflow-hidden">
+        <!-- Decorative subtle background pattern -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+                <defs>
+                    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="white" stroke-width="0.5"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
+        </div>
+
+        <div class="max-w-5xl mx-auto px-4 py-8 md:py-10 relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-inner">
+                        <span class="text-3xl md:text-4xl text-emerald-300 font-black heading-font">MM</span>
+                    </div>
+                    <div>
+                        <span class="inline-block px-3 py-0.5 bg-emerald-500/30 text-emerald-200 border border-emerald-500/30 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider mb-1">
+                            Penerimaan Siswa Baru (SPMB)
+                        </span>
+                        <h1 class="text-2xl md:text-3.5xl font-extrabold heading-font tracking-tight">MTs. Muhajirin Surabaya</h1>
+                        <p class="text-emerald-100 text-xs md:text-sm mt-1 flex items-center gap-1.5 opacity-90">
+                            <i class="fa-solid fa-location-dot text-emerald-400"></i> Jl. Pogot 5 No. 26 Surabaya, Jawa Timur
+                        </p>
+                    </div>
+                </div>
+                <div class="text-right hidden md:block">
+                    <p class="text-emerald-200 text-xs font-semibold uppercase">Tahun Ajaran</p>
+                    <p class="text-xl font-bold tracking-wider">2026 / 2027</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="flex gap-2 -mb-px">
+                <button id="tab-check" onclick="switchTab('check')" class="flex-1 py-4 px-3 text-center border-b-2 border-emerald-600 text-emerald-700 font-bold text-sm md:text-base flex items-center justify-center gap-2 transition-all">
+                    <i class="fa-solid fa-address-card"></i>
+                    <span>Cek Kelengkapan Berkas</span>
+                </button>
+                <button id="tab-announce" onclick="switchTab('announce')" class="flex-1 py-4 px-3 text-center border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-medium text-sm md:text-base flex items-center justify-center gap-2 transition-all">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <span>Pengumuman Daftar Ulang</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-5xl w-full mx-auto px-4 py-6 flex-grow">
+
+        <!-- TAB 1: CEK BERKAS -->
+        <section id="section-check" class="space-y-6 block">
+            
+            <!-- MODEL WARNING BANNER: WAJIB DIBACA -->
+            <div class="bg-amber-50 border-l-8 border-amber-500 p-5 md:p-6 rounded-r-2xl shadow-md space-y-4 relative overflow-hidden">
+                <div class="absolute right-0 top-0 translate-x-4 -translate-y-4 opacity-5 pointer-events-none">
+                    <i class="fa-solid fa-triangle-exclamation text-9xl"></i>
+                </div>
+                
+                <div class="flex gap-3.5 items-start">
+                    <div class="flex-shrink-0 w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-600 shadow-inner">
+                        <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-amber-900 font-black text-base md:text-lg heading-font">Pemberitahuan Penting Orang Tua / Wali Murid</h3>
+                        <p class="text-amber-800 text-sm md:text-base font-bold mt-1.5 leading-relaxed bg-white/60 p-3 rounded-lg border border-amber-200/50 shadow-sm">
+                            ⚠️ "Mohon dilengkapi saat Daftar Ulang SPMB tgl <span class="underline decoration-wavy decoration-amber-500 font-black text-rose-700">09 Juli 2026 Jam 12.30 - 14.30 WIB</span> di MTs. Muhajirin Surabaya"
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="pt-3 border-t border-amber-200 grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs md:text-sm text-slate-700">
+                    <div class="flex gap-2.5 items-start bg-amber-100/40 p-3 rounded-xl border border-amber-200/30">
+                        <i class="fa-solid fa-users text-amber-700 mt-0.5 text-base"></i>
+                        <p><strong>Bisa Diwakilkan:</strong> Jika Orang Tua/Wali memiliki halangan hadir sesuai jadwal di atas, kehadiran <strong>bisa diwakilkan oleh anggota keluarga lainnya</strong>.</p>
+                    </div>
+                    <div class="flex gap-2.5 items-start bg-amber-100/40 p-3 rounded-xl border border-amber-200/30">
+                        <i class="fa-solid fa-hand-holding-dollar text-amber-700 mt-0.5 text-base"></i>
+                        <p><strong>Kendala Pembayaran:</strong> Jika Anda memiliki kendala terkait penyelesaian biaya administrasi, silakan berkonsultasi langsung pada <strong>Helpdesk panitia di bawah</strong>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEARCH AND DROPDOWN PANEL -->
+            <div class="bg-gradient-to-br from-white to-slate-50 rounded-2xl shadow-md border border-slate-200/80 p-6 md:p-8 space-y-4">
+                <div class="text-center md:text-left space-y-2">
+                    <div class="flex items-center gap-2 justify-center md:justify-start">
+                        <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
+                        <span class="text-xs font-bold text-emerald-700 uppercase tracking-widest">LANGKAH MUDAH</span>
+                    </div>
+                    <label for="dropdown-btn" class="block text-slate-800 font-extrabold text-xl md:text-2xl heading-font">Pilih Nama Calon Siswa</label>
+                    <p class="text-xs md:text-sm text-slate-500 max-w-2xl leading-relaxed">Ketuk tombol di bawah, ketik nama putra-putri Anda untuk melakukan pencarian secara otomatis, lalu klik nama tersebut untuk melihat kelengkapan berkas.</p>
+                </div>
+
+                <!-- Custom Searchable Dropdown Container -->
+                <div class="relative max-w-xl mx-auto md:mx-0">
+                    <div class="relative">
+                        <button type="button" id="dropdown-btn" onclick="toggleDropdown()" class="w-full flex items-center justify-between gap-3 px-5 py-4 bg-white hover:bg-slate-50 border-2 border-emerald-600/30 hover:border-emerald-600 rounded-xl text-left text-slate-700 font-semibold shadow-sm transition-all focus:outline-none focus:ring-4 focus:ring-emerald-500/10 pulse-attention">
+                            <span id="dropdown-selected-name" class="truncate text-slate-800 font-bold text-base md:text-lg">👇 Ketuk di Sini Untuk Mencari Nama Siswa</span>
+                            <i class="fa-solid fa-chevron-down text-emerald-600 text-lg transition-transform duration-200" id="dropdown-arrow"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Dropdown Options Panel -->
+                    <div id="dropdown-panel" class="hidden absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-slate-200 z-50 overflow-hidden transform origin-top transition-all duration-200">
+                        <div class="p-3 border-b border-slate-100 bg-slate-50">
+                            <div class="relative">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base"></i>
+                                <input type="text" id="search-input" onkeyup="filterStudents()" placeholder="Ketik nama putra/putri Anda di sini..." class="w-full pl-10 pr-4 py-2.5 text-base bg-white border-2 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600">
+                            </div>
+                        </div>
+                        <ul id="students-list" class="max-h-64 overflow-y-auto divide-y divide-slate-100 text-slate-700 font-medium">
+                            <!-- JS will inject options here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULT CARD DISPLAY -->
+            <div id="result-container" class="hidden transform transition-all duration-300">
+                <!-- Data will be dynamically rendered here via JS -->
+            </div>
+
+            <!-- UNSELECTED STATE PLACEHOLDER -->
+            <div id="placeholder-container" class="bg-white rounded-2xl border-2 border-dashed border-slate-200/80 p-8 md:p-12 text-center text-slate-500 space-y-4 shadow-sm">
+                <div class="w-16 h-16 bg-slate-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl shadow-inner">
+                    <i class="fa-solid fa-user-check"></i>
+                </div>
+                <h3 class="font-bold text-slate-700 text-lg md:text-xl heading-font">Hasil Belum Ditampilkan</h3>
+                <p class="max-w-md mx-auto text-sm leading-relaxed text-slate-400">Silakan pilih nama putra/putri Anda terlebih dahulu melalui tombol pencarian di atas untuk memantau data berkas administrasi.</p>
+            </div>
+
+        </section>
+
+        <!-- TAB 2: PENGUMUMAN DAFTAR ULANG -->
+        <section id="section-announce" class="hidden space-y-6">
+            
+            <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+                <!-- Banner Header -->
+                <div class="bg-gradient-to-r from-emerald-800 to-teal-900 text-white p-6 md:p-8 text-center relative">
+                    <span class="inline-block px-3 py-1 bg-white/20 border border-white/25 rounded-full text-xs font-semibold uppercase mb-2">Pemberitahuan Resmi Sekolah</span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold heading-font tracking-tight">DAFTAR ULANG SISWA BARU</h2>
+                    <p class="text-emerald-100 text-xs md:text-sm mt-1">MTs. Muhajirin Surabaya • Tahun Ajaran 2026/2027</p>
+                </div>
+
+                <div class="p-6 md:p-8 space-y-6 leading-relaxed">
+                    <div class="text-center space-y-2 bg-emerald-50/50 p-4 rounded-xl border border-emerald-100">
+                        <p class="font-bold text-emerald-800 italic text-base md:text-lg">Assalamu'alaikum Warahmatullahi Wabarakatuh. 🤲</p>
+                        <p class="text-slate-600 text-sm md:text-base max-w-2xl mx-auto font-medium">Bagi seluruh calon peserta didik baru MTs. Muhajirin, jangan lupa untuk melakukan daftar ulang sesuai jadwal yang telah ditentukan berikut ini:</p>
+                    </div>
+
+                    <!-- Jadwal Card -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-xl shadow-sm border border-slate-200">
+                            <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-calendar-day"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-bold uppercase">Hari / Tanggal</p>
+                                <p class="text-base md:text-lg font-black text-slate-800">Kamis, 09 Juli 2026</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 bg-slate-50 p-4 rounded-xl shadow-sm border border-slate-200">
+                            <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-bold uppercase">Waktu / Jam</p>
+                                <p class="text-base md:text-lg font-black text-slate-800">Pukul 12.30 – 14.30 WIB</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Syarat Checklist -->
+                    <div class="space-y-3">
+                        <h4 class="font-bold text-slate-800 flex items-center gap-2 text-base md:text-lg">
+                            <i class="fa-solid fa-clipboard-list text-emerald-600"></i> Persyaratan yang Harus Dipenuhi:
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                            <div class="flex items-start gap-3 bg-emerald-50/40 border border-emerald-100 p-4 rounded-xl">
+                                <span class="text-emerald-600 mt-0.5"><i class="fa-solid fa-circle-check text-xl"></i></span>
+                                <p class="text-sm font-semibold text-slate-700 leading-normal">Melunasi administrasi keuangan (sesuai data sisa pembayaran siswa)</p>
+                            </div>
+                            <div class="flex items-start gap-3 bg-emerald-50/40 border border-emerald-100 p-4 rounded-xl">
+                                <span class="text-emerald-600 mt-0.5"><i class="fa-solid fa-circle-check text-xl"></i></span>
+                                <p class="text-sm font-semibold text-slate-700 leading-normal">Melengkapi kekurangan berkas fisik (bisa dicek pada tab nama siswa)</p>
+                            </div>
+                        </div>
+                        <p class="text-xs md:text-sm text-slate-500 bg-amber-50 p-3.5 border border-amber-200 rounded-lg flex items-center gap-2 font-medium">
+                            <i class="fa-solid fa-circle-info text-amber-600 text-lg"></i> Mohon hadir tepat waktu ke madrasah dan berpakaian rapi serta sopan.
+                        </p>
+                    </div>
+
+                    <!-- Rincian Seragam & Hak Perlengkapan -->
+                    <div class="border-t border-slate-100 pt-6 space-y-4">
+                        <h3 class="font-extrabold text-slate-800 text-lg md:text-xl text-center heading-font">
+                            🎁 Hak Perolehan Seragam Berdasarkan Jalur
+                        </h3>
+                        <p class="text-center text-xs md:text-sm text-slate-500 max-w-xl mx-auto">Informasi kelengkapan seragam dan aksesoris sekolah yang didapatkan masing-masing siswa baru:</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                            <!-- Jalur Inden -->
+                            <div class="bg-gradient-to-b from-white to-sky-50/20 border border-sky-100 rounded-2xl shadow-sm p-5 space-y-3.5 relative overflow-hidden">
+                                <div class="absolute right-0 top-0 bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">Jalur Inden</div>
+                                <h4 class="font-extrabold text-sky-900 flex items-center gap-2 border-b border-sky-100 pb-2">
+                                    <i class="fa-solid fa-star text-sky-500"></i> Perolehan Perlengkapan:
+                                </h4>
+                                <ul class="grid grid-cols-1 gap-2 text-slate-700 text-sm pl-1 font-medium">
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Seragam atasan putih</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Seragam atasan batik</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> 1 Stel kaos olahraga</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> 3 kaos kaki</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> 1 ikat pinggang</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> 1 peci / 3 kerudung</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> 1 dasi</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Biaya STS-SAT 1 semester</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> 16 LKS untuk 1 semester</li>
+                                </ul>
+                            </div>
+
+                            <!-- Jalur Gelombang 1 & 2 -->
+                            <div class="bg-gradient-to-b from-white to-emerald-50/20 border border-emerald-100 rounded-2xl shadow-sm p-5 space-y-3.5 relative overflow-hidden">
+                                <div class="absolute right-0 top-0 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">Gelombang 1 & 2</div>
+                                <h4 class="font-extrabold text-emerald-900 flex items-center gap-2 border-b border-emerald-100 pb-2">
+                                    <i class="fa-solid fa-award text-emerald-600"></i> Perolehan Perlengkapan:
+                                </h4>
+                                <ul class="grid grid-cols-1 gap-2 text-slate-700 text-sm pl-1 font-medium">
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Seragam atasan batik</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> 1 Stel kaos olahraga</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> 3 kaos kaki</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> 1 ikat pinggang</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> 1 peci / 3 kerudung</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> 1 dasi</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> Biaya STS-SAT 1 semester</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> 16 LKS untuk 1 semester</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Info Bed & Tabungan -->
+                        <div class="mt-4 bg-emerald-50 border border-emerald-200 rounded-xl p-5 flex gap-4 items-start">
+                            <span class="text-2xl text-emerald-700"><i class="fa-solid fa-circle-exclamation animate-bounce"></i></span>
+                            <div class="text-sm text-emerald-900 leading-relaxed">
+                                <p class="font-extrabold text-base">Pembelian Atribut Bed & Buku Tabungan:</p>
+                                <p class="text-emerald-800 mt-1">Pembelian dapat dilakukan dengan menghubungi Kakak OSIM saat pelaksanaan daftar ulang atau pada saat masa MPLS seharga <strong>Rp 20.000</strong>.</p>
+                                <div class="mt-3 flex flex-wrap gap-2 text-xs font-bold text-emerald-800">
+                                    <span class="bg-emerald-100 px-2.5 py-1 rounded border border-emerald-200">2 Bed Saku</span>
+                                    <span class="bg-emerald-100 px-2.5 py-1 rounded border border-emerald-200">2 Bed Kelas</span>
+                                    <span class="bg-emerald-100 px-2.5 py-1 rounded border border-emerald-200">1 Bed No. Gudep</span>
+                                    <span class="bg-emerald-100 px-2.5 py-1 rounded border border-emerald-200">1 Buku Tabungan</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-5 border-t border-slate-100">
+                        <p class="font-bold text-slate-800 heading-font text-base md:text-lg">Sampai jumpa di MTs. Muhajirin! 💚</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- HELPDESK & EMERGENCY CONTACT AREA (Sangat Penting Untuk Orang Tua) -->
+        <section class="mt-8 bg-white border border-slate-200 rounded-2xl shadow-md overflow-hidden">
+            <div class="bg-gradient-to-r from-emerald-700 to-emerald-800 text-white px-5 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <span class="text-xl animate-pulse"><i class="fa-solid fa-headset animate-bounce"></i></span>
+                    <h3 class="font-extrabold heading-font text-base md:text-lg">Pusat Bantuan & Konsultasi (Helpdesk WA)</h3>
+                </div>
+                <span class="bg-white/20 text-white text-[10px] md:text-xs px-2.5 py-1 rounded-full font-bold uppercase tracking-wider">Layanan Aktif</span>
+            </div>
+            
+            <div class="p-5 md:p-6 space-y-4">
+                <p class="text-sm text-slate-600 leading-relaxed font-medium">
+                    Bapak/Ibu wali murid, apabila terdapat kekeliruan data, atau terkendala masalah kehadiran dan pelunasan pembayaran, silakan hubungi kontak panitia resmi kami di bawah ini untuk konsultasi:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                    <!-- Contact Bapak Rofik -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-slate-50 hover:bg-emerald-50/40 p-4 border border-slate-200 rounded-xl transition-all group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-xl shadow-inner">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm md:text-base">Bapak Rofik</h4>
+                                <p class="text-[11px] text-slate-500 font-medium">Panitia Pendaftaran SPMB</p>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/6289692387070" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white text-xs font-bold rounded-lg shadow-sm transition-all">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> Hubungi WA Bapak Rofik
+                        </a>
+                    </div>
+
+                    <!-- Contact Ibu Nurul -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-slate-50 hover:bg-emerald-50/40 p-4 border border-slate-200 rounded-xl transition-all group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-xl shadow-inner">
+                                <i class="fa-solid fa-user-astronaut"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm md:text-base">Ibu Nurul</h4>
+                                <p class="text-[11px] text-slate-500 font-medium">Panitia Administrasi & Berkas</p>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/628995406131" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white text-xs font-bold rounded-lg shadow-sm transition-all">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> Hubungi WA Ibu Nurul
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 text-center py-6 border-t border-slate-800 text-xs md:text-sm">
+        <div class="max-w-5xl mx-auto px-4 space-y-2">
+            <p class="text-slate-200 font-bold heading-font">MTs. Muhajirin Surabaya • Jl. Pogot 5 No. 26 Surabaya</p>
+            <p class="text-slate-400">&copy; 2026 Panitia Pelaksana SPMB. Hak cipta dilindungi undang-undang.</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Database Of 27 Students (Matching requested items exactly)
+        const studentsData = [
+            {
+                id: 1,
+                name: "Mochamad Iqbalu Zaki",
+                berkas: ["FC Ijazah/SKL (2 lembar)"],
+                pembayaran: null,
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 2,
+                name: "Raissa Niken Wulandari",
+                berkas: ["FC Ijazah/SKL (2 lembar)"],
+                pembayaran: "Rp 150.000",
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 3,
+                name: "Izzatun Nisaa Rohmani",
+                berkas: ["FC Ijazah/SKL (2 lembar)"],
+                pembayaran: null,
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 4,
+                name: "Muhammad Yogi Sudarmaji",
+                berkas: ["FC Ijazah/SKL (2 lembar)"],
+                pembayaran: "Rp 250.000",
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 5,
+                name: "Abdul Faqih",
+                berkas: ["FC Ijazah/SKL (2 lembar)"],
+                pembayaran: "Rp 250.000",
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 6,
+                name: "Habsy Ackbar Riskylillah",
+                berkas: ["FC Ijazah/SKL (2 lembar)", "FC KTP Kedua Ortu (masing-masing 2 lembar)"],
+                pembayaran: null,
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 7,
+                name: "Ach. Sofi",
+                berkas: ["FC Ijazah/SKL (2 lembar)"],
+                pembayaran: null,
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 8,
+                name: "Anugrah Ramadhani",
+                berkas: ["FC Ijazah/SKL (2 lembar)"],
+                pembayaran: null,
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 9,
+                name: "Luthfiana Nisaul Jamilah",
+                berkas: ["FC Ijazah/SKL (2 lembar)", "FC KTP Kedua Ortu (masing-masing 2 lembar)"],
+                pembayaran: null,
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 10,
+                name: "Ornela Kristin Aulia",
+                berkas: ["Ijazah/SKL (2 lembar)", "FC KTP Kedua Ortu (masing-masing 2 lembar)"],
+                pembayaran: "Rp 400.000",
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 11,
+                name: "Siti Fadilah",
+                berkas: ["FC Ijazah/SKL (2 lembar)", "FC KTP Kedua Ortu (masing-masing 2 lembar)"],
+                pembayaran: null,
+                keterangan: null,
+                notes: ["Belum ukur seragam (siswa harap dibawa saat daftar ulang)"]
+            },
+            {
+                id: 12,
+                name: "Nur Dwi Jayanti",
+                berkas: ["FC Ijazah (jika sudah ada, kalau belum tidak apa)"],
+                pembayaran: "Rp 350.000",
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 13,
+                name: "Ayu Dewi Sandra",
+                berkas: [],
+                pembayaran: null,
+                keterangan: "LENGKAP",
+                notes: []
+            },
+            {
+                id: 14,
+                name: "Jakfar Shodiq",
+                berkas: ["FC Ijazah/SKL (2 lembar)", "FC KTP Kedua Ortu (masing-masing 2 lembar)"],
+                pembayaran: null,
+                keterangan: null,
+                notes: ["Belum ukur seragam", "Belum tes penempatan kelas BTQ (siswa harap dibawa saat daftar ulang)"]
+            },
+            {
+                id: 15,
+                name: "Moch. Ubaydillah",
+                berkas: [],
+                pembayaran: "Rp 650.000",
+                keterangan: "Siswa Mutasi",
+                notes: []
+            },
+            {
+                id: 16,
+                name: "Putra Andika Pratama",
+                berkas: ["FC Ijazah (2 lembar)"],
+                pembayaran: "Rp 800.000",
+                keterangan: "Siswa Mutasi",
+                notes: ["Belum ukur seragam (siswa harap dibawa saat daftar ulang)"]
+            },
+            {
+                id: 17,
+                name: "Moch. Iqbal Kurniawan",
+                berkas: ["FC Ijazah (jika sudah ada, kalau belum tidak apa)"],
+                pembayaran: "Rp 200.000",
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 18,
+                name: "Rasya Anggara Putra",
+                berkas: ["FC Ijazah (jika sudah ada, kalau belum tidak apa)"],
+                pembayaran: null,
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 19,
+                name: "Ananda Afrieza Nuraini",
+                berkas: ["FC Ijazah (jika sudah ada, kalau belum tidak apa)"],
+                pembayaran: "Rp 600.000",
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 20,
+                name: "Moch Ali Wefa Ibnu Halil",
+                berkas: ["FC Ijazah/SKL (2 lembar)", "FC KTP Kedua Ortu (masing-masing 2 lembar)", "FC KK dan Akte (2 lembar)"],
+                pembayaran: "Rp 400.000",
+                keterangan: null,
+                notes: ["Belum ukur seragam", "Belum tes penempatan kelas BTQ (siswa harap dibawa saat daftar ulang)"]
+            },
+            {
+                id: 21,
+                name: "Rizki Maulana",
+                berkas: ["FC Ijazah/SKL (2 lembar)", "FC KTP ortu (masing-masing 2 lembar)"],
+                pembayaran: null,
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 22,
+                name: "Atiqa Fairuz Khalisa",
+                berkas: ["Ijazah (jika sudah ada, kalau belum tidak apa)"],
+                pembayaran: "Rp 400.000",
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 23,
+                name: "Bunga Antika",
+                berkas: ["Ijazah (jika sudah ada, kalau belum tidak apa)"],
+                pembayaran: "Rp 600.000",
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 24,
+                name: "Thalita E. A. H.",
+                berkas: ["Ijazah (jika sudah ada, kalau belum tidak apa)"],
+                pembayaran: null,
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 25,
+                name: "Gilang Satria Mahardika",
+                berkas: ["Ijazah (jika sudah ada, jika belum ada tidak apa)"],
+                pembayaran: null,
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 26,
+                name: "Mikail Kenzie Almaliki",
+                berkas: ["Ijazah (jika sudah ada, jika belum ada tidak apa)"],
+                pembayaran: "Rp 500.000",
+                keterangan: null,
+                notes: []
+            },
+            {
+                id: 27,
+                name: "Nabila L. K. L.",
+                berkas: ["FC KTP Kedua Ortu (masing-masing 2 lembar)", "FC SKL/Ijazah (2 lembar)"],
+                pembayaran: null,
+                keterangan: null,
+                notes: []
+            }
+        ];
+
+        // Switch between tabs (Cek Berkas vs Announcement)
+        function switchTab(target) {
+            const tabCheck = document.getElementById('tab-check');
+            const tabAnnounce = document.getElementById('tab-announce');
+            const secCheck = document.getElementById('section-check');
+            const secAnnounce = document.getElementById('section-announce');
+
+            if (target === 'check') {
+                tabCheck.className = "flex-1 py-4 px-3 text-center border-b-2 border-emerald-600 text-emerald-700 font-bold text-sm md:text-base flex items-center justify-center gap-2 transition-all";
+                tabAnnounce.className = "flex-1 py-4 px-3 text-center border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-medium text-sm md:text-base flex items-center justify-center gap-2 transition-all";
+                secCheck.classList.remove('hidden');
+                secAnnounce.classList.add('hidden');
+            } else {
+                tabCheck.className = "flex-1 py-4 px-3 text-center border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-medium text-sm md:text-base flex items-center justify-center gap-2 transition-all";
+                tabAnnounce.className = "flex-1 py-4 px-3 text-center border-b-2 border-emerald-600 text-emerald-700 font-bold text-sm md:text-base flex items-center justify-center gap-2 transition-all";
+                secCheck.classList.add('hidden');
+                secAnnounce.classList.remove('hidden');
+            }
+        }
+
+        // Initialize Student List inside Custom Dropdown without adding unneeded status markers on dropdown names
+        function initStudentsList() {
+            const listContainer = document.getElementById('students-list');
+            listContainer.innerHTML = '';
+
+            // Sort alphabetically by name
+            const sortedStudents = [...studentsData].sort((a, b) => a.name.localeCompare(b.name));
+
+            sortedStudents.forEach(student => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <button type="button" onclick="selectStudent(${student.id})" class="w-full text-left px-5 py-3.5 hover:bg-emerald-50 text-slate-700 hover:text-emerald-900 font-semibold text-sm md:text-base transition-colors duration-150 flex items-center gap-3">
+                        <span class="w-2 h-2 bg-emerald-400 rounded-full flex-shrink-0"></span>
+                        <span class="truncate">${student.name}</span>
+                    </button>
+                `;
+                listContainer.appendChild(li);
+            });
+        }
+
+        // Toggle dropdown open/close status
+        function toggleDropdown() {
+            const panel = document.getElementById('dropdown-panel');
+            const arrow = document.getElementById('dropdown-arrow');
+            const isHidden = panel.classList.contains('hidden');
+            const btn = document.getElementById('dropdown-btn');
+
+            if (isHidden) {
+                panel.classList.remove('hidden');
+                panel.classList.add('animate-[fadeIn_0.15s_ease-out]');
+                arrow.classList.add('rotate-180');
+                btn.classList.remove('pulse-attention'); // Stop pulse once opened
+                // Auto focus on typing input
+                setTimeout(() => {
+                    document.getElementById('search-input').focus();
+                }, 100);
+            } else {
+                panel.classList.add('hidden');
+                arrow.classList.remove('rotate-180');
+            }
+        }
+
+        // Close search selector when clicked outside
+        window.addEventListener('click', function(e) {
+            const dropdownBtn = document.getElementById('dropdown-btn');
+            const dropdownPanel = document.getElementById('dropdown-panel');
+            if (!dropdownBtn.contains(e.target) && !dropdownPanel.contains(e.target)) {
+                dropdownPanel.classList.add('hidden');
+                document.getElementById('dropdown-arrow').classList.remove('rotate-180');
+            }
+        });
+
+        // Live text filter for student search
+        function filterStudents() {
+            const input = document.getElementById('search-input');
+            const filter = input.value.toLowerCase();
+            const list = document.getElementById('students-list');
+            const items = list.getElementsByTagName('li');
+
+            for (let i = 0; i < items.length; i++) {
+                const text = items[i].textContent || items[i].innerText;
+                if (text.toLowerCase().indexOf(filter) > -1) {
+                    items[i].style.display = "";
+                } else {
+                    items[i].style.display = "none";
+                }
+            }
+        }
+
+        // Format and render results for chosen student
+        function selectStudent(id) {
+            const student = studentsData.find(s => s.id === id);
+            if (!student) return;
+
+            // Close selector dropdown
+            const panel = document.getElementById('dropdown-panel');
+            panel.classList.add('hidden');
+            document.getElementById('dropdown-arrow').classList.remove('rotate-180');
+
+            // Update visible label on dropdown button
+            document.getElementById('dropdown-selected-name').textContent = student.name;
+
+            const resultContainer = document.getElementById('result-container');
+            const placeholderContainer = document.getElementById('placeholder-container');
+
+            placeholderContainer.classList.add('hidden');
+            resultContainer.classList.remove('hidden');
+
+            const isLengkap = student.keterangan === 'LENGKAP';
+            let contentHTML = '';
+
+            if (isLengkap) {
+                contentHTML = `
+                    <div class="bg-emerald-50 border-2 border-emerald-500 rounded-2xl p-6 text-center space-y-3 shadow-sm">
+                        <div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <h4 class="font-extrabold text-lg md:text-xl heading-font text-emerald-800">Alhamdulillah, Berkas & Administrasi Lengkap!</h4>
+                        <p class="text-xs md:text-sm text-emerald-700 max-w-md mx-auto font-medium">Seluruh kelengkapan berkas fisik serta administrasi keuangan dari ananda <strong>${student.name}</strong> dinyatakan <strong>LENGKAP</strong>. Terima kasih!</p>
+                    </div>
+                `;
+            } else {
+                // Berkas missing item list
+                let berkasHTML = '';
+                if (student.berkas && student.berkas.length > 0) {
+                    berkasHTML = `
+                        <div class="bg-rose-50 border border-rose-200 rounded-xl p-4 md:p-5 space-y-3">
+                            <h5 class="font-bold text-rose-900 text-sm md:text-base flex items-center gap-2">
+                                <i class="fa-solid fa-folder-open text-rose-600 text-lg"></i> Kekurangan Berkas Fisik:
+                            </h5>
+                            <ul class="space-y-2 text-slate-700 text-xs md:text-sm pl-1">
+                                ${student.berkas.map(b => `
+                                    <li class="flex items-start gap-2 bg-white p-3 rounded-lg border border-rose-100 shadow-sm font-medium">
+                                        <i class="fa-solid fa-square-xmark text-rose-500 mt-0.5 text-base"></i>
+                                        <span>${b}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+
+                // Payment missing list
+                let pembayaranHTML = '';
+                if (student.pembayaran) {
+                    pembayaranHTML = `
+                        <div class="bg-rose-50 border border-rose-200 rounded-xl p-4 md:p-5 space-y-3">
+                            <h5 class="font-bold text-rose-900 text-sm md:text-base flex items-center gap-2">
+                                <i class="fa-solid fa-file-invoice-dollar text-rose-600 text-lg"></i> Sisa Pembayaran Administrasi:
+                            </h5>
+                            <div class="bg-white p-4 rounded-lg border border-rose-100 shadow-sm flex items-center justify-between gap-3">
+                                <span class="text-xs text-slate-400 font-bold uppercase">Sisa Tagihan:</span>
+                                <span class="text-lg md:text-xl font-extrabold text-rose-600 heading-font">${student.pembayaran}</span>
+                            </div>
+                            <p class="text-[11px] text-slate-500 italic font-medium"><i class="fa-solid fa-info-circle"></i> Pembayaran dapat dinegosiasikan dengan Panitia jika ada kendala.</p>
+                        </div>
+                    `;
+                }
+
+                // Additional notes
+                let notesHTML = '';
+                if (student.notes && student.notes.length > 0) {
+                    notesHTML = `
+                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 md:p-5 space-y-3">
+                            <h5 class="font-bold text-amber-900 text-sm md:text-base flex items-center gap-2">
+                                <i class="fa-solid fa-circle-exclamation text-amber-600 text-lg animate-pulse"></i> Catatan Penting Tambahan:
+                            </h5>
+                            <ul class="space-y-2 text-amber-800 text-xs md:text-sm pl-1 font-semibold">
+                                ${student.notes.map(n => `
+                                    <li class="flex items-start gap-2 bg-white p-3 rounded-lg border border-amber-100 shadow-sm">
+                                        <i class="fa-solid fa-triangle-exclamation text-amber-500 mt-0.5 text-base"></i>
+                                        <span>${n}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+
+                // Combine modules
+                contentHTML = `
+                    <div class="space-y-4">
+                        ${student.keterangan ? `
+                            <div class="bg-teal-50 border border-teal-200 rounded-xl p-4 flex items-center gap-3 shadow-sm">
+                                <span class="text-teal-600 text-lg"><i class="fa-solid fa-tags"></i></span>
+                                <p class="text-sm font-semibold text-teal-900">Keterangan Status Siswa: <strong class="bg-teal-100 px-2 py-0.5 rounded text-teal-800">${student.keterangan}</strong></p>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${berkasHTML ? berkasHTML : ''}
+                            ${pembayaranHTML ? pembayaranHTML : ''}
+                        </div>
+                        
+                        ${notesHTML ? notesHTML : ''}
+                    </div>
+                `;
+            }
+
+            // Assemble overall card
+            resultContainer.innerHTML = `
+                <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden transform duration-200 hover:shadow-lg">
+                    <!-- Top Ribbon Header -->
+                    <div class="bg-gradient-to-r from-emerald-800 to-teal-800 text-white p-5 md:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="space-y-1">
+                            <span class="text-[10px] md:text-xs font-bold text-emerald-300 uppercase tracking-widest">Detail Kekurangan Siswa</span>
+                            <h3 class="text-xl md:text-2xl font-black heading-font">${student.name}</h3>
+                        </div>
+                        <div>
+                            ${isLengkap ? 
+                                '<span class="inline-flex items-center gap-1.5 bg-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-full shadow-md"><i class="fa-solid fa-circle-check text-white"></i> LENGKAP</span>' : 
+                                '<span class="inline-flex items-center gap-1.5 bg-rose-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow-md animate-pulse"><i class="fa-solid fa-triangle-exclamation"></i> BELUM LENGKAP</span>'
+                            }
+                        </div>
+                    </div>
+                    
+                    <!-- Inner Container -->
+                    <div class="p-5 md:p-6 space-y-6">
+                        ${contentHTML}
+                        
+                        <!-- Persistent Notice matching selection -->
+                        <div class="border-t border-slate-150 pt-5 space-y-3.5">
+                            <div class="bg-slate-50 border border-slate-200/80 p-4 rounded-xl space-y-3">
+                                <h4 class="text-xs md:text-sm font-bold text-slate-800 flex items-center gap-2">
+                                    <i class="fa-solid fa-circle-exclamation text-amber-500 text-lg"></i> Pengingat Alur Daftar Ulang:
+                                </h4>
+                                <ul class="space-y-2 text-xs md:text-sm text-slate-600 font-medium">
+                                    <li class="flex items-start gap-2">
+                                        <i class="fa-solid fa-check text-emerald-600 mt-0.5"></i>
+                                        <span>Bawa berkas fisik dan pelunasan administrasi pada hari <strong>Kamis, 09 Juli 2026 pukul 12.30 - 14.30 WIB</strong> di MTs. Muhajirin Surabaya.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <i class="fa-solid fa-check text-emerald-600 mt-0.5"></i>
+                                        <span>Jika Orang Tua ada kendala, boleh diwakilkan oleh kerabat/keluarga lainnya.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <i class="fa-solid fa-check text-emerald-600 mt-0.5"></i>
+                                        <span>Jika terhambat masalah biaya administrasi, silakan langsung menghubungi panitia kami di bagian Helpdesk WhatsApp.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // On window load bootstrap logic
+        window.onload = function() {
+            initStudentsList();
+        }
+    </script>
+</body>
+</html>
